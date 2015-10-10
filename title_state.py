@@ -52,10 +52,10 @@ def handle_events():
 def draw():
     global ct
     clear_canvas()
-    main_image.clip_draw(0, 0, 800, 600, 400,300)
-    title_image.draw(450,320)
+    main_image.clip_draw(0, 0, 1600, 900, 800,450)
+    title_image.clip_draw(0,0,1300,600,900,500)
     if(ct<0.5):
-        press_image.draw(400,150)
+        press_image.draw(800,150)
 
     update_canvas()
 
