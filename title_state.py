@@ -1,30 +1,33 @@
 import game_framework
 import main_state
+
 from pico2d import *
 
 name = "TitleState"
-main_image = None
-press_image=None
-title_image=None
+main = None
+press=None
+title=None
 
 
 ct=0.0
 
 
 def enter():
-    global main_image,press_image,title_image
-    main_image=load_image('concept.png')
-    press_image=load_image('press_key.png')
-    title_image=load_image('title_logo.png')
+    global main,press,title
+    main=load_image('game_image\\guide\\concept.png')
+    press=load_image('game_image\\guide\\press_key.png')
+    title=load_image('game_image\\guide\\title.png')
 
     pass
 
 
 def exit():
-    global main_image,press_image,title_image
-    del(main_image)
-    del(press_image)
-    del(title_image)
+    global main,press,title
+    del(main)
+    del(press)
+    del(title)
+
+
 
     pass
 
@@ -37,26 +40,17 @@ def handle_events():
         else:
             if event.type==SDL_KEYDOWN:
                 game_framework.change_state(main_state)
-            '''
-            if (event.type,event.key)==(SDL_KEYDOWN,SDLK_ESCAPE):
-                game_framework.quit()
-            elif(event.type,event.key)==(SDL_KEYDOWN,SDLK_SPACE):
-                game_framework.change_state(main_state)
-                '''
-
-
-
     pass
 
 
 def draw():
-    global ct
+    global  image,ct
     clear_canvas()
-    main_image.clip_draw(0, 0, 1600, 900, 800,450)
-    title_image.clip_draw(0,0,1300,600,900,500)
-    if(ct<0.5):
-        press_image.draw(800,150)
 
+    main.clip_draw(0,0,500,200,800,450,1600,900)
+    if ct%2==0:
+        press.clip_draw(0,0,800,600,800,200,800,600)
+    title.clip_draw(0,0,800,600,1000,600,1000,800)
     update_canvas()
 
     pass
@@ -64,11 +58,11 @@ def draw():
 
 def update():
     global ct
-    if (ct > 1.0):
-        ct = 0
-
-    delay(0.01)
-    ct += 0.01
+    ct+=1
+    enter()
+    draw()
+    delay(0.5)
+    # exit()
     pass
 
 
