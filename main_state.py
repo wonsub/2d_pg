@@ -99,7 +99,7 @@ def update():
     global goblincnt
 
     delaytime+=1
-    if(delaytime%10==9):
+    if(delaytime%10==9): #1초마다 작동할수 있게 변경
         if(Timer.contet>0):
             Timer.contet-=1
         if(Timer.contet==0):
