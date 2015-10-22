@@ -48,15 +48,13 @@ def left():
         castle.x-=5
         over=1
 
-
-
-
-    for goblin in goblins[:goblincnt]:
-        for i in range(goblincnt):
+    if over!=1:
+        for i in range(100):
             goblins[i].x+=5
 
 
-    # for forest in forests[2]:
+
+
     for i in range(2):
         forests[i].x+=5
         if forests[i].x>600+1200*i:
@@ -74,7 +72,7 @@ def right():
     global goblincnt
     global state,over,LEFT,RIGHT
 
-   
+
     road.x-=5
     if road.x<1200-900:
         road.x+=5
@@ -87,26 +85,17 @@ def right():
         castle.x+=5
         over=1
 
-
-
-
-    for goblin in goblins[:goblincnt]:
-        for i in range(goblincnt):
+    if over!=1:
+        for i in range(100):
             goblins[i].x-=5
-    #        영역 밖일 때 삭제하는거 필요
 
 
-    # for forest in forests[2]:
+
     for i in range(2):
         forests[i].x-=5
         if forests[i].x<600+1200*i-900:
             forests[i].x+=5
             over=1
-
-
-
-
-
 
 def enter():
 
@@ -133,10 +122,6 @@ def enter():
     for i in range(goblincnt):
         goblins[i].x=200
         goblins[i].y=100
-
-
-
-
 
     road=BackGround.Road()
     road.x=1200
@@ -187,8 +172,11 @@ def handle_events():
         elif event.type==SDL_KEYDOWN and event.key==SDLK_RIGHT:
             state=1
 
+
+
         if event.type==SDL_KEYUP:
             state=None
+            over=None
 
 
         '''
@@ -227,11 +215,14 @@ def update():
     global state,over,LEFT,RIGHT
 
     delaytime+=1
+
+
     if state==0:
         left()
 
     elif state==1:
         right()
+
 
     if(delaytime%10==9): #1초마다 작동할수 있게 변경
         if(Timer.contet>0):
