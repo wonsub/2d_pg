@@ -18,7 +18,7 @@ class Forest:
             self.image=load_image('game_image\\background\\forest.png')
 
     def draw(self):
-        self.image.clip_draw(0,0,600,300,self.x,self.y,1200,900)
+        self.image.clip_draw(0,0,600,300,self.x,self.y,800,600)
 
 class Castle:
     image=None
@@ -28,4 +28,4 @@ class Castle:
             self.image=load_image('game_image\\background\\castle.png')
 
     def draw(self):
-        self.image.clip_draw(0,0,400,400,self.x,self.y,600,600)
+        self.image.clip_draw(0,0,400,400,self.x,self.y,400,400)

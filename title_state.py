@@ -16,7 +16,7 @@ def enter():
     global main,press,title
     main=load_image('game_image\\guide\\concept.png')
     press=load_image('game_image\\guide\\press_key.png')
-    title=load_image('game_image\\guide\\title.png')
+    title=load_image('game_image\\guide\\title_logo.png')
 
     pass
 
@@ -50,7 +50,7 @@ def draw():
     main.clip_draw(0,0,500,200,800,450,1600,900)
     if ct%2==0:
         press.clip_draw(0,0,800,600,800,200,800,600)
-    title.clip_draw(0,0,800,600,1000,600,1000,800)
+    title.clip_draw(0,0,800,600,900,600,1000,800)
     update_canvas()
 
     pass
