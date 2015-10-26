@@ -1,5 +1,5 @@
 from pico2d import*
-import main_state
+
 
 
 class Hero():
@@ -50,6 +50,7 @@ class Hero():
     def update(self):
 
         self.frame+=1
+
         if self.state==0:
             self.frame%=2
         elif self.state==1 or self.state==2:
@@ -59,9 +60,19 @@ class Hero():
         elif self.state==4:
             self.frame=0
         elif self.state==5:
+            # if self.frame==0:
+            #     self.y+=50
+            if self.frame==1:
+                self.y+=50
+            if self.frame==2:
+                self.y-=0
+            if self.frame==3:
+                self.y-=50
+
             if self.frame==4:
                 self.state=0
                 self.frame=0
+
 
 
 

@@ -10,10 +10,11 @@ import game_framework
 import Letter
 import BackGround
 import Character
+import object
 
 global delaytime,Timer
 global commandtime
-global road,castle,forest,forests
+global road,castle,castles,forest,forests
 
 global hero
 global goblin,goblins
@@ -31,15 +32,16 @@ delaytime=None
 
 
 def enter():
-
     global delaytime,Timer
     global commandtime
-    global road,castle
+    global road
+    global castle,castles
     global forest,forests
     global hero
     global goblin,goblins
     global goblincnt
     global state,over,LEFT,RIGHT
+    global tower,towers
 
     state=None
     over=None
@@ -49,19 +51,20 @@ def enter():
     delaytime=10
     commandtime=0
 
+
+    Timer=Letter.Font()
+    Timer.contet=180
+    Timer.x=650
+    Timer.y=800
+
+
     hero=Character.Hero()
     hero.x=800
     hero.y=300
     hero.dir=0
     hero.spd=5
-
     hero.state=0
 
-
-    forests=[BackGround.Forest() for i in range(3)]
-    for i in range(3):
-        forests[i].x=400+800*i
-        forests[i].y=600
 
     goblins=[Character.Goblin() for i in range(100)]
     for i in range(100):
@@ -69,19 +72,48 @@ def enter():
         goblins[i].y=280
         goblins[i].spd=8
         goblins[i].dir=0
+    #     캐릭
+
+
+    forests=[BackGround.Forest() for i in range(3)]
+    for i in range(3):
+        forests[i].x=400+800*i
+        forests[i].y=600
+
+
+
 
     road=BackGround.Road()
     road.x=1200
     road.y=225
 
-    castle=BackGround.Castle()
-    castle.x=200
-    castle.y=450
+    castles=[BackGround.Castle() for i in range(2)]
+     # castle=BackGround.Castle()
 
-    Timer=Letter.Font()
-    Timer.contet=180
-    Timer.x=650
-    Timer.y=800
+    for i in range(2):
+        castles[i].y=450
+
+    castles[0].x=200
+    castles[0].dir=0
+
+    castles[1].x=2150
+    castles[1].dir=1
+    # castle.y=450
+
+
+    towers=[object.Tower() for i in range(2)]
+
+    for i in range(2):
+        towers[i].y=625
+
+    towers[0].x=550
+    towers[0].dir=0
+
+    towers[1].x=1800
+    towers[1].dir=1
+    # 배경
+
+
     pass
 
 name = "MainState"
@@ -90,24 +122,26 @@ name = "MainState"
 def left():
     global delaytime,Timer
     global commandtime
-    global road,castle
+    global road
+    global castle,castles
     global forest,forests
     global hero
     global goblin,goblins
     global goblincnt
     global state,over,LEFT,RIGHT
+    global tower,towers
 
 
     road.x+=hero.spd
-    if road.x>1200:
+    if road.x>=1200:
         road.x-=hero.spd
         over=1
 
 
-    castle.x+=hero.spd
-    if castle.x>200:
-        castle.x-=hero.spd
-        over=1
+    # castle.x+=hero.spd
+    # if castle.x>200:
+    #     castle.x-=hero.spd
+    #     over=1
 
     if over!=1:
         for i in range(100):
@@ -115,48 +149,94 @@ def left():
 
 
 
+
+    castles[0].x+=hero.spd
+    if castles[0].x>=200:
+        castles[0].x-=hero.spd
+        over=1
+    castles[1].x+=hero.spd
+    if castles[1].x>=2150:
+        castles[1].x-=hero.spd
+        over=1
+
+
     for i in range(3):
         forests[i].x+=hero.spd
-        if forests[i].x>400+800*i:
+        if forests[i].x>=400+800*i:
             forests[i].x-=hero.spd
             over=1
 
 
+    towers[0].x+=hero.spd
+    if towers[0].x>=550:
+        towers[0].x-=hero.spd
+        over=1
+    towers[1].x+=hero.spd
+    if towers[1].x>=1800:
+        towers[1].x-=hero.spd
+        over=1
+
+
 
 def right():
-
     global delaytime,Timer
     global commandtime
-    global road,castle
+    global road
+    global castle,castles
     global forest,forests
     global hero
     global goblin,goblins
     global goblincnt
     global state,over,LEFT,RIGHT
+    global tower,towers
 
 
     road.x-=hero.spd
-    if road.x<1200-900:
+    if road.x<=1200-900:
         road.x+=hero.spd
         over=1
 
 
 
-    castle.x-=hero.spd
-    if castle.x<200-900:
-        castle.x+=hero.spd
-        over=1
+    # castle.x-=hero.spd
+    # if castle.x<200-900:
+    #     castle.x+=hero.spd
+    #     over=1
 
     if over!=1:
         for i in range(100):
             goblins[i].x-=hero.spd
 
 
+    castles[0].x-=hero.spd
+    if castles[0].x<=200-900:
+        castles[0].x+=hero.spd
+        over=1
+    castles[1].x-=hero.spd
+    if castles[1].x<=2150-900:
+        castles[1].x+=hero.spd
+        over=1
+
+
+    towers[0].x-=hero.spd
+    if towers[0].x<=550-900:
+        towers[0].x+=hero.spd
+        over=1
+    towers[1].x-=hero.spd
+    if towers[1].x<=1800-900:
+        towers[1].x+=hero.spd
+        over=1
+
+
+
+
     for i in range(3):
         forests[i].x-=hero.spd
-        if forests[i].x<400+800*i-900:
+        if forests[i].x<=400+800*i-900:
             forests[i].x+=hero.spd
             over=1
+
+
 
 
 
@@ -174,15 +254,16 @@ def resume():
 
 
 def handle_events():
-
     global delaytime,Timer
     global commandtime
-    global road,castle
+    global road
+    global castle,castles
     global forest,forests
     global hero
     global goblin,goblins
     global goblincnt
     global state,over,LEFT,RIGHT
+    global tower,towers
 
 
     events=get_events()
@@ -249,15 +330,16 @@ def handle_events():
     pass
 
 def update():
-
     global delaytime,Timer
     global commandtime
-    global road,castle
+    global road
+    global castle,castles
     global forest,forests
     global hero
     global goblin,goblins
     global goblincnt
     global state,over,LEFT,RIGHT
+    global tower,towers
 
     delaytime+=1
     delaytime%=10
@@ -272,7 +354,6 @@ def update():
     elif state==1:
         if hero.x<800 or (over==1 and hero.x<1150 ):
             hero.x+=hero.spd
-
         else:
             right()
 
@@ -333,22 +414,31 @@ def update():
 
 
 def draw():
-
     global delaytime,Timer
     global commandtime
-    global road,castle
+    global road
+    global castle,castles
     global forest,forests
     global hero
     global goblin,goblins
     global goblincnt
     global state,over,LEFT,RIGHT
+    global tower,towers
 
 
     clear_canvas()
     for i in range(3):
         forests[i].draw()
     road.draw()
-    castle.draw()
+
+    for tower in towers[:2]:
+        tower.draw()
+
+
+    for castle in castles[:2]:
+        castle.draw()
+    # castle.draw()
+
     for goblin in goblins[:goblincnt]:
         goblin.draw()
     hero.draw()
