@@ -21,7 +21,7 @@ global goblin,goblins
 global goblincnt
 
 global state,over,LEFT,RIGHT
-
+global Scroll,mx,my
 
 
 
@@ -42,6 +42,7 @@ def enter():
     global goblincnt
     global state,over,LEFT,RIGHT
     global tower,towers
+    global Scroll,mx,my
 
     state=None
     over=None
@@ -50,6 +51,8 @@ def enter():
     goblincnt=1
     delaytime=10
     commandtime=0
+    Scroll=0
+    mx,my=0,0
 
 
     Timer=Letter.Font()
@@ -130,6 +133,7 @@ def left():
     global goblincnt
     global state,over,LEFT,RIGHT
     global tower,towers
+    global Scroll,mx,my
 
 
     road.x+=hero.spd
@@ -189,6 +193,7 @@ def right():
     global goblincnt
     global state,over,LEFT,RIGHT
     global tower,towers
+    global Scroll,mx,my
 
 
     road.x-=hero.spd
@@ -264,10 +269,22 @@ def handle_events():
     global goblincnt
     global state,over,LEFT,RIGHT
     global tower,towers
+    global Scroll,mx,my
 
 
     events=get_events()
     for event in events:
+        # if  event.type==SDL_MOUSEBUTTONUP:
+        if  event.type==SDL_MOUSEMOTION:
+            mx,my=event.x,900-event.y
+            if mx>1600-50:
+                Scroll=1
+
+            elif mx<0+50:
+                Scroll=-1
+
+
+
         if event.type==SDL_QUIT or event.key==SDLK_ESCAPE:
             game_framework.quit()
 
@@ -340,9 +357,25 @@ def update():
     global goblincnt
     global state,over,LEFT,RIGHT
     global tower,towers
+    global Scroll,mx,my
 
     delaytime+=1
     delaytime%=10
+
+    if mx<0+200 or Scroll==-1:
+        left()
+        if over==0:
+            hero.x+=hero.spd
+            for i in range(100):
+                goblins[i].x+=hero.spd
+    elif mx>1600-200 or Scroll==1:
+        right()
+        if over==0:
+            hero.x-=hero.spd
+            for i in range(100):
+                goblins[i].x-=hero.spd
+    #     전체 화면 스크롤
+
 
 
     if state==0:
@@ -424,6 +457,7 @@ def draw():
     global goblincnt
     global state,over,LEFT,RIGHT
     global tower,towers
+    global Scroll,mx,my
 
 
     clear_canvas()
