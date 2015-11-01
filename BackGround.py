@@ -31,6 +31,5 @@ class Castle:
             self.image=load_image('game_image\\background\\castle.png')
 
     def draw(self):
-        # self.image.clip_draw(0,0,400,400,self.x,self.y,400,400)
         self.image.clip_draw(self.frame*400,self.dir*400,400,400,self.x,self.y,400,400)
 

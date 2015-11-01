@@ -11,15 +11,12 @@ import Letter
 import BackGround
 import Character
 import object
-
 global delaytime,Timer
 global commandtime
 global road,castle,castles,forest,forests
-
 global hero
-global goblin,goblins
-global goblincnt
-
+global catapult,catapults,catapultcnt
+global goblin,goblins,goblincnt
 global state,over,LEFT,RIGHT
 global Scroll,mx,my
 
@@ -38,8 +35,8 @@ def enter():
     global castle,castles
     global forest,forests
     global hero
-    global goblin,goblins
-    global goblincnt
+    global catapult,catapults,catapultcnt
+    global goblin,goblins, goblincnt
     global state,over,LEFT,RIGHT
     global tower,towers
     global Scroll,mx,my
@@ -49,10 +46,11 @@ def enter():
 
 
     goblincnt=1
+    catapultcnt=1
     delaytime=10
     commandtime=0
     Scroll=0
-    mx,my=0,0
+    mx,my=800,450
 
 
     Timer=Letter.Font()
@@ -67,6 +65,20 @@ def enter():
     hero.dir=0
     hero.spd=5
     hero.state=0
+
+    catapults=[Character.Catapult() for i in range(100)]
+    for i in range(100):
+        catapults[i].body_x=400
+        catapults[i].body_y=300
+        if catapults[i].stone_dir==0:
+            catapults[i].stone_x=400-100
+        elif catapults[i].stone_dir==1:
+            catapults[i].stone_x=400+100
+        catapults[i].stone_y=320
+        catapults[i].body_state=1
+        catapults[i].stone_state=1
+
+
 
 
     goblins=[Character.Goblin() for i in range(100)]
@@ -129,8 +141,8 @@ def left():
     global castle,castles
     global forest,forests
     global hero
-    global goblin,goblins
-    global goblincnt
+    global catapult,catapults,catapultcnt
+    global goblin,goblins, goblincnt
     global state,over,LEFT,RIGHT
     global tower,towers
     global Scroll,mx,my
@@ -141,17 +153,15 @@ def left():
         road.x-=hero.spd
         over=1
 
+    if over!=1:
+        for i in range(100):
+            catapults[i].body_x+=hero.spd
+            catapults[i].stone_x+=hero.spd
 
-    # castle.x+=hero.spd
-    # if castle.x>200:
-    #     castle.x-=hero.spd
-    #     over=1
 
     if over!=1:
         for i in range(100):
             goblins[i].x+=hero.spd
-
-
 
 
     castles[0].x+=hero.spd
@@ -189,8 +199,8 @@ def right():
     global castle,castles
     global forest,forests
     global hero
-    global goblin,goblins
-    global goblincnt
+    global catapult,catapults,catapultcnt
+    global goblin,goblins, goblincnt
     global state,over,LEFT,RIGHT
     global tower,towers
     global Scroll,mx,my
@@ -201,12 +211,10 @@ def right():
         road.x+=hero.spd
         over=1
 
-
-
-    # castle.x-=hero.spd
-    # if castle.x<200-900:
-    #     castle.x+=hero.spd
-    #     over=1
+    if over!=1:
+        for i in range(100):
+            catapults[i].body_x-=hero.spd
+            catapults[i].stone_x-=hero.spd
 
     if over!=1:
         for i in range(100):
@@ -232,19 +240,11 @@ def right():
         towers[1].x+=hero.spd
         over=1
 
-
-
-
     for i in range(3):
         forests[i].x-=hero.spd
         if forests[i].x<=400+800*i-900:
             forests[i].x+=hero.spd
             over=1
-
-
-
-
-
 
 def exit():
     close_canvas()
@@ -265,8 +265,8 @@ def handle_events():
     global castle,castles
     global forest,forests
     global hero
-    global goblin,goblins
-    global goblincnt
+    global catapult,catapults,catapultcnt
+    global goblin,goblins, goblincnt
     global state,over,LEFT,RIGHT
     global tower,towers
     global Scroll,mx,my
@@ -353,8 +353,8 @@ def update():
     global castle,castles
     global forest,forests
     global hero
-    global goblin,goblins
-    global goblincnt
+    global catapult,catapults,catapultcnt
+    global goblin,goblins, goblincnt
     global state,over,LEFT,RIGHT
     global tower,towers
     global Scroll,mx,my
@@ -364,16 +364,20 @@ def update():
 
     if mx<0+200 or Scroll==-1:
         left()
-        if over==0:
-            hero.x+=hero.spd
+        if over!=1:
+            hero.x+=5
             for i in range(100):
-                goblins[i].x+=hero.spd
+                goblins[i].x+=5
+                catapults[i].body_x+=5
+                catapults[i].stone_x+=5
     elif mx>1600-200 or Scroll==1:
         right()
-        if over==0:
-            hero.x-=hero.spd
-            for i in range(100):
-                goblins[i].x-=hero.spd
+        if over!=1:
+         hero.x-=5
+        for i in range(100):
+            goblins[i].x-=5
+            catapults[i].body_x-=5
+            catapults[i].stone_x-=5
     #     전체 화면 스크롤
 
 
@@ -401,6 +405,7 @@ def update():
 
 
     if hero.state==0:
+        hero.spd=5
         if delaytime%4==0:
             hero.update()
     elif hero.state==1:
@@ -431,10 +436,14 @@ def update():
         if(Timer.contet==0):
             game_framework.quit()
 
+    for catapult in catapults[:catapultcnt]:
+        catapult.update()
 
 
     for goblin in goblins[:goblincnt]:
         goblin.update()
+
+
 
 
 
@@ -453,8 +462,8 @@ def draw():
     global castle,castles
     global forest,forests
     global hero
-    global goblin,goblins
-    global goblincnt
+    global catapult,catapults,catapultcnt
+    global goblin,goblins, goblincnt
     global state,over,LEFT,RIGHT
     global tower,towers
     global Scroll,mx,my
@@ -472,6 +481,9 @@ def draw():
     for castle in castles[:2]:
         castle.draw()
     # castle.draw()
+
+    for catapult in catapults[:catapultcnt]:
+        catapult.draw()
 
     for goblin in goblins[:goblincnt]:
         goblin.draw()

@@ -1,6 +1,62 @@
 from pico2d import*
 
 
+class Catapult():
+    body_image=None
+    stone_image=None
+    def __init__(self):
+        self.stone_dir=0
+        self.body_x,self.body_y=200,100
+        self.stone_x,self.stone_y=200,100
+        self.body_frame=0
+        self.stone_frame=0
+        self.body_state=0
+        self.stone_state=0
+        if Catapult.body_image==None:
+            self.body_image = load_image('game_image\\character\\siege\\catapult.png')
+
+        if Catapult.stone_image==None:
+            self.stone_image = load_image('game_image\\character\\siege\\stone.png')
+
+    def draw(self):
+
+        if self.stone_state==0:#대기
+            self.stone_image.clip_draw(0,0,50,50,self.stone_x,self.stone_y,100,100)
+        if self.stone_state==1:#날라감
+            self.stone_image.clip_draw(self.stone_frame*50,0,50,50,self.stone_x,self.stone_y,100,100)
+
+        if self.body_state==0:
+            self.body_image.clip_draw(self.body_frame*150,self.body_state*120,150,120,self.body_x,self.body_y,300,240)
+        if self.body_state==1:
+            self.body_image.clip_draw(self.body_frame*150,self.body_state*120,150,120,self.body_x,self.body_y,300,240)
+        #     우(발사,재장전)
+        if self.body_state==2:
+            self.body_image.clip_draw(self.body_frame*150,self.body_state*120,150,120,self.body_x,self.body_y,300,240)
+        if self.body_state==3:
+            self.body_image.clip_draw(self.body_frame*150,self.body_state*120,150,120,self.body_x,self.body_y,300,240)
+        #    좌self.body_x
+
+
+    def update(self):
+        self.body_frame+=1
+        if self.stone_state==1:
+            self.stone_frame+=1
+
+        if(self.body_state==0 and self.body_frame==8):
+            self.body_state+=1
+        elif(self.body_state==1 and self.body_frame==8):
+            self.body_state-=1
+
+        if(self.body_state==2 and self.body_frame==8):
+            self.body_state+=1
+        elif(self.body_state==3 and self.body_frame==8):
+            self.body_state-=1
+
+
+
+
+        self.body_frame%=8
+        self.stone_frame%=3
 
 class Hero():
     imgStand=None
@@ -14,7 +70,7 @@ class Hero():
         self.x,self.y=200,100
         self.frame=0
         self.state=0
-        self.dir=1
+        self.dir=0
         if Hero.imgStand==None:
             self.imgStand = load_image('game_image\\character\\hero\\stand.png')
         if Hero.imgWalk==None:
@@ -72,12 +128,6 @@ class Hero():
             if self.frame==4:
                 self.state=0
                 self.frame=0
-
-
-
-
-
-
 
 
 class Goblin():
