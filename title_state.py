@@ -1,31 +1,37 @@
 import game_framework
 import main_state
+import json
 
 from pico2d import *
 
 name = "TitleState"
-main = None
-press=None
-title=None
+BackGround = None
+Press_Key=None
+Title_Logo=None
+
+count=0
+class Image():
+    Image_Start_x,Image_Start_Y=None,None
+    Image_Width,Image_Height=None,None
+    Draw_Center_X,Draw_Center_Y=None,None
+    Draw_Width,Draw_Height=None,None
 
 
-ct=0.0
 
 
 def enter():
-    global main,press,title
-    main=load_image('game_image\\guide\\concept.png')
-    press=load_image('game_image\\guide\\press_key.png')
-    title=load_image('game_image\\guide\\title_logo.png')
-
+    global BackGround,Press_Key,Title_Logo
+    BackGround=load_image('game_image\\loading\\concept.png')
+    Press_Key=load_image('game_image\\loading\\Press_Key.png')
+    Title_Logo=load_image('game_image\\loading\\title_logo.png')
     pass
 
 
 def exit():
-    global main,press,title
-    del(main)
-    del(press)
-    del(title)
+    global BackGround,Press_Key,Title_Logo
+    del(BackGround)
+    del(Press_Key)
+    del(Title_Logo)
 
 
 
@@ -44,24 +50,73 @@ def handle_events():
 
 
 def draw():
-    global  image,ct
+    global  image,count,backgound
+
+
+    title_data_file=open('title_data.txt','r')
+    title_data=json.load(title_data_file)
+    title_data_file.close()
+    data=[]
+
     clear_canvas()
 
-    main.clip_draw(0,0,500,200,800,450,1600,900)
-    if ct%2==0:
-        press.clip_draw(0,0,800,600,800,200,800,600)
-    title.clip_draw(0,0,800,600,900,600,1000,800)
+    background=Image()
+    background.Image_Start_X=title_data['BackGronud']['Image_Start_X']
+    background.Image_Start_Y=title_data['BackGronud']['Image_Start_Y']
+    background.Image_Width=title_data['BackGronud']['Image_Width']
+    background.Image_Height=title_data['BackGronud']['Image_Height']
+    background.Draw_Center_X=title_data['BackGronud']['Draw_Center_X']
+    background.Draw_Center_Y=title_data['BackGronud']['Draw_Center_Y']
+    background.Draw_Width=title_data['BackGronud']['Draw_Width']
+    background.Draw_Height=title_data['BackGronud']['Draw_Height']
+
+
+    press_key=Image()
+    press_key.Image_Start_X=title_data['Press_Key']['Image_Start_X']
+    press_key.Image_Start_Y=title_data['Press_Key']['Image_Start_Y']
+    press_key.Image_Width=title_data['Press_Key']['Image_Width']
+    press_key.Image_Height=title_data['Press_Key']['Image_Height']
+    press_key.Draw_Center_X=title_data['Press_Key']['Draw_Center_X']
+    press_key.Draw_Center_Y=title_data['Press_Key']['Draw_Center_Y']
+    press_key.Draw_Width=title_data['Press_Key']['Draw_Width']
+    press_key.Draw_Height=title_data['Press_Key']['Draw_Height']
+
+    title_logo=Image()
+    title_logo.Image_Start_X=title_data['Title_Logo']['Image_Start_X']
+    title_logo.Image_Start_Y=title_data['Title_Logo']['Image_Start_Y']
+    title_logo.Image_Width=title_data['Title_Logo']['Image_Width']
+    title_logo.Image_Height=title_data['Title_Logo']['Image_Height']
+    title_logo.Draw_Center_X=title_data['Title_Logo']['Draw_Center_X']
+    title_logo.Draw_Center_Y=title_data['Title_Logo']['Draw_Center_Y']
+    title_logo.Draw_Width=title_data['Title_Logo']['Draw_Width']
+    title_logo.Draw_Height=title_data['Title_Logo']['Draw_Height']
+
+
+
+
+
+    BackGround.clip_draw(background.Image_Start_X, background.Image_Start_Y,  background.Image_Width,  background.Image_Height,
+                         background.Draw_Center_X, background.Draw_Center_Y, background.Draw_Width, background.Draw_Height)
+
+    if count<5:
+        Press_Key.clip_draw(press_key.Image_Start_X, press_key.Image_Start_Y,  press_key.Image_Width,  press_key.Image_Height,
+                         press_key.Draw_Center_X, press_key.Draw_Center_Y, press_key.Draw_Width, press_key.Draw_Height)
+
+    Title_Logo.clip_draw(title_logo.Image_Start_X, title_logo.Image_Start_Y,  title_logo.Image_Width,  title_logo.Image_Height,
+                         title_logo.Draw_Center_X, title_logo.Draw_Center_Y, title_logo.Draw_Width, title_logo.Draw_Height)
     update_canvas()
 
     pass
 
 
 def update():
-    global ct
-    ct+=1
+    global count
+    count+=1
+    count%=10
     enter()
     draw()
-    delay(0.5)
+    delay(0.1)
+
     # exit()
     pass
 
