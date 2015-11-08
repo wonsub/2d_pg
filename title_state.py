@@ -1,6 +1,8 @@
 import game_framework
 import main_state
+import Image_Format
 import json
+
 
 from pico2d import *
 
@@ -10,11 +12,11 @@ Press_Key=None
 Title_Logo=None
 
 count=0
-class Image():
-    Image_Start_x,Image_Start_Y=None,None
-    Image_Width,Image_Height=None,None
-    Draw_Center_X,Draw_Center_Y=None,None
-    Draw_Width,Draw_Height=None,None
+# class Image():
+#     Image_Start_x,Image_Start_Y=None,None
+#     Image_Width,Image_Height=None,None
+#     Draw_Center_X,Draw_Center_Y=None,None
+#     Draw_Width,Draw_Height=None,None
 
 
 
@@ -32,9 +34,6 @@ def exit():
     del(BackGround)
     del(Press_Key)
     del(Title_Logo)
-
-
-
     pass
 
 
@@ -50,17 +49,17 @@ def handle_events():
 
 
 def draw():
-    global  image,count,backgound
+    global count
 
 
     title_data_file=open('title_data.txt','r')
     title_data=json.load(title_data_file)
     title_data_file.close()
-    data=[]
+
 
     clear_canvas()
 
-    background=Image()
+    background=Image_Format.Attribute()
     background.Image_Start_X=title_data['BackGronud']['Image_Start_X']
     background.Image_Start_Y=title_data['BackGronud']['Image_Start_Y']
     background.Image_Width=title_data['BackGronud']['Image_Width']
@@ -70,8 +69,7 @@ def draw():
     background.Draw_Width=title_data['BackGronud']['Draw_Width']
     background.Draw_Height=title_data['BackGronud']['Draw_Height']
 
-
-    press_key=Image()
+    press_key=Image_Format.Attribute()
     press_key.Image_Start_X=title_data['Press_Key']['Image_Start_X']
     press_key.Image_Start_Y=title_data['Press_Key']['Image_Start_Y']
     press_key.Image_Width=title_data['Press_Key']['Image_Width']
@@ -81,7 +79,7 @@ def draw():
     press_key.Draw_Width=title_data['Press_Key']['Draw_Width']
     press_key.Draw_Height=title_data['Press_Key']['Draw_Height']
 
-    title_logo=Image()
+    title_logo=Image_Format.Attribute()
     title_logo.Image_Start_X=title_data['Title_Logo']['Image_Start_X']
     title_logo.Image_Start_Y=title_data['Title_Logo']['Image_Start_Y']
     title_logo.Image_Width=title_data['Title_Logo']['Image_Width']
@@ -90,8 +88,6 @@ def draw():
     title_logo.Draw_Center_Y=title_data['Title_Logo']['Draw_Center_Y']
     title_logo.Draw_Width=title_data['Title_Logo']['Draw_Width']
     title_logo.Draw_Height=title_data['Title_Logo']['Draw_Height']
-
-
 
 
 
@@ -104,6 +100,7 @@ def draw():
 
     Title_Logo.clip_draw(title_logo.Image_Start_X, title_logo.Image_Start_Y,  title_logo.Image_Width,  title_logo.Image_Height,
                          title_logo.Draw_Center_X, title_logo.Draw_Center_Y, title_logo.Draw_Width, title_logo.Draw_Height)
+
     update_canvas()
 
     pass
@@ -116,8 +113,6 @@ def update():
     enter()
     draw()
     delay(0.1)
-
-    # exit()
     pass
 
 

@@ -1,5 +1,7 @@
 import game_framework
 import title_state
+import Image_Format
+import json
 from pico2d import *
 
 
@@ -18,7 +20,7 @@ def enter():
 def exit():
     global image
     del(image)
-    # close_canvas()
+    close_canvas()
     pass
 
 
@@ -27,7 +29,7 @@ def update():
 
     if (logo_time > 1.0):
         logo_time = 0
-
+       # game_framework.quit()
         game_framework.push_state(title_state)
     delay(0.01)
     logo_time += 0.01
@@ -36,8 +38,26 @@ def update():
 
 def draw():
     global  image
+
+    start_data_file=open('start_data.txt','r')
+    start_data=json.load(start_data_file)
+    start_data_file.close()
+
     clear_canvas()
-    image.clip_draw(0,0,1600,900,800,450)
+
+
+    kpu_credit=Image_Format.Attribute()
+    kpu_credit.Image_Start_X=start_data['KPU_Credit']['Image_Start_X']
+    kpu_credit.Image_Start_Y=start_data['KPU_Credit']['Image_Start_Y']
+    kpu_credit.Image_Width=start_data['KPU_Credit']['Image_Width']
+    kpu_credit.Image_Height=start_data['KPU_Credit']['Image_Height']
+    kpu_credit.Draw_Center_X=start_data['KPU_Credit']['Draw_Center_X']
+    kpu_credit.Draw_Center_Y=start_data['KPU_Credit']['Draw_Center_Y']
+    kpu_credit.Draw_Width=start_data['KPU_Credit']['Draw_Width']
+    kpu_credit.Draw_Height=start_data['KPU_Credit']['Draw_Height']
+
+    image.clip_draw(kpu_credit.Image_Start_X, kpu_credit.Image_Start_Y,  kpu_credit.Image_Width, kpu_credit.Image_Height,
+                    kpu_credit.Draw_Center_X, kpu_credit.Draw_Center_Y, kpu_credit.Draw_Width, kpu_credit.Draw_Height)
     update_canvas()
     pass
 
