@@ -1,79 +1,73 @@
 __author__ = 'wonsub'
 import game_framework
-import title_state
 import Image_Format
 import json
+
 from pico2d import *
 
 
-name = "StartState"
-image = None
-logo_time = 0.0
+
+global main,board
+
+class Main_Image():
+
+    def __init__(self):
+        self.image = load_image('game_image\\UI\\Main_img.png')
 
 
-def enter():
-    global image
-    open_canvas(1600,900)
-    image = load_image('game_image\\loading\\kpu_credit.png')
-    pass
+    def draw(self):
+
+        UI_data_file = open('UI_data.txt','r')
+        UI_data = json.load(UI_data_file)
+        UI_data_file.close()
+
+        main_image = Image_Format.Attribute()
+        main_image.Image_Start_X = UI_data['Main_Image']['Image_Start_X']
+        main_image.Image_Start_Y = UI_data['Main_Image']['Image_Start_Y']
+        main_image.Image_Width = UI_data['Main_Image']['Image_Width']
+        main_image.Image_Height = UI_data['Main_Image']['Image_Height']
+        main_image.Draw_Center_X = UI_data['Main_Image']['Draw_Center_X']
+        main_image.Draw_Center_Y = UI_data['Main_Image']['Draw_Center_Y']
+        main_image.Draw_Width = UI_data['Main_Image']['Draw_Width']
+        main_image.Draw_Height = UI_data['Main_Image']['Draw_Height']
+
+        self.image.clip_draw(
+            main_image.Image_Start_X, main_image.Image_Start_Y,  main_image.Image_Width, main_image.Image_Height,
+            main_image.Draw_Center_X, main_image.Draw_Center_Y, main_image.Draw_Width, main_image.Draw_Height)
+
+class Board():
+    def __init__(self):
+        self.image = load_image('game_image\\UI\\Board.png')
 
 
-def exit():
-    global image
-    del(image)
-    close_canvas()
-    pass
 
+    def draw(self):
+        UI_data_file = open('UI_data.txt','r')
+        UI_data = json.load(UI_data_file)
+        UI_data_file.close()
 
-def update():
-    global logo_time
+        board = Image_Format.Attribute()
+        board.Image_Start_X = UI_data['Board']['Image_Start_X']
+        board.Image_Start_Y = UI_data['Board']['Image_Start_Y']
+        board.Image_Width = UI_data['Board']['Image_Width']
+        board.Image_Height = UI_data['Board']['Image_Height']
+        board.Draw_Center_X = UI_data['Board']['Draw_Center_X']
+        board.Draw_Center_Y = UI_data['Board']['Draw_Center_Y']
+        board.Draw_Width = UI_data['Board']['Draw_Width']
+        board.Draw_Height = UI_data['Board']['Draw_Height']
 
-    if (logo_time > 2.0):
-        logo_time = 0
-       # game_framework.quit()
-        game_framework.push_state(title_state)
-    logo_time += 0.01
-    pass
+        self.image.clip_draw(
+            board.Image_Start_X, board.Image_Start_Y,  board.Image_Width, board.Image_Height,
+            board.Draw_Center_X, board.Draw_Center_Y, board.Draw_Width, board.Draw_Height)
 
 
 def draw():
-    global  image
-
-    start_data_file=open('start_data.txt','r')
-    start_data=json.load(start_data_file)
-    start_data_file.close()
-
-    clear_canvas()
+    global main, board
+    main = Main_Image()
+    board = Board()
 
 
-    kpu_credit=Image_Format.Attribute()
-    kpu_credit.Image_Start_X=start_data['KPU_Credit']['Image_Start_X']
-    kpu_credit.Image_Start_Y=start_data['KPU_Credit']['Image_Start_Y']
-    kpu_credit.Image_Width=start_data['KPU_Credit']['Image_Width']
-    kpu_credit.Image_Height=start_data['KPU_Credit']['Image_Height']
-    kpu_credit.Draw_Center_X=start_data['KPU_Credit']['Draw_Center_X']
-    kpu_credit.Draw_Center_Y=start_data['KPU_Credit']['Draw_Center_Y']
-    kpu_credit.Draw_Width=start_data['KPU_Credit']['Draw_Width']
-    kpu_credit.Draw_Height=start_data['KPU_Credit']['Draw_Height']
-
-    image.clip_draw(kpu_credit.Image_Start_X, kpu_credit.Image_Start_Y,  kpu_credit.Image_Width, kpu_credit.Image_Height,
-                    kpu_credit.Draw_Center_X, kpu_credit.Draw_Center_Y, kpu_credit.Draw_Width, kpu_credit.Draw_Height)
-    update_canvas()
-    pass
-
-
-
-
-def handle_events():
-    events = get_events()
-    pass
-
-
-def pause(): pass
-
-
-def resume(): pass
-
-
+    board.draw()
+    main.draw()
 
 

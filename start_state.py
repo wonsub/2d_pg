@@ -12,7 +12,7 @@ logo_time = 0.0
 
 def enter():
     global image
-    open_canvas(1600,900)
+    open_canvas(1400,700)
     image = load_image('game_image\\loading\\kpu_credit.png')
     pass
 
@@ -55,8 +55,9 @@ def draw():
     kpu_credit.Draw_Width=start_data['KPU_Credit']['Draw_Width']
     kpu_credit.Draw_Height=start_data['KPU_Credit']['Draw_Height']
 
-    image.clip_draw(kpu_credit.Image_Start_X, kpu_credit.Image_Start_Y,  kpu_credit.Image_Width, kpu_credit.Image_Height,
-                    kpu_credit.Draw_Center_X, kpu_credit.Draw_Center_Y, kpu_credit.Draw_Width, kpu_credit.Draw_Height)
+    image.clip_draw(
+        kpu_credit.Image_Start_X, kpu_credit.Image_Start_Y,  kpu_credit.Image_Width, kpu_credit.Image_Height,
+        kpu_credit.Draw_Center_X, kpu_credit.Draw_Center_Y, kpu_credit.Draw_Width, kpu_credit.Draw_Height)
     update_canvas()
     pass
 

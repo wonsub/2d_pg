@@ -93,11 +93,13 @@ def draw():
                          background.Draw_Center_X, background.Draw_Center_Y, background.Draw_Width, background.Draw_Height)
 
     if count < 5:
-        Press_Key.clip_draw(press_key.Image_Start_X, press_key.Image_Start_Y,  press_key.Image_Width,  press_key.Image_Height,
-                         press_key.Draw_Center_X, press_key.Draw_Center_Y, press_key.Draw_Width, press_key.Draw_Height)
+        Press_Key.clip_draw(
+            press_key.Image_Start_X, press_key.Image_Start_Y,  press_key.Image_Width,  press_key.Image_Height,
+            press_key.Draw_Center_X, press_key.Draw_Center_Y, press_key.Draw_Width, press_key.Draw_Height)
 
-    Title_Logo.clip_draw(title_logo.Image_Start_X, title_logo.Image_Start_Y,  title_logo.Image_Width,  title_logo.Image_Height,
-                         title_logo.Draw_Center_X, title_logo.Draw_Center_Y, title_logo.Draw_Width, title_logo.Draw_Height)
+    Title_Logo.clip_draw(
+        title_logo.Image_Start_X, title_logo.Image_Start_Y,  title_logo.Image_Width,  title_logo.Image_Height,
+        title_logo.Draw_Center_X, title_logo.Draw_Center_Y, title_logo.Draw_Width, title_logo.Draw_Height)
 
     update_canvas()
 
