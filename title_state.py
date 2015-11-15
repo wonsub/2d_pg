@@ -8,8 +8,8 @@ from pico2d import *
 
 name = "TitleState"
 BackGround = None
-Press_Key=None
-Title_Logo=None
+Press_Key = None
+Title_Logo = None
 
 count=0
 # class Image():
@@ -22,15 +22,20 @@ count=0
 
 
 def enter():
-    global BackGround,Press_Key,Title_Logo
-    BackGround=load_image('game_image\\loading\\concept.png')
-    Press_Key=load_image('game_image\\loading\\Press_Key.png')
-    Title_Logo=load_image('game_image\\loading\\title_logo.png')
+    global BackGround, Press_Key, Title_Logo
+    global title_data
+    BackGround = load_image('game_image\\loading\\concept.png')
+    Press_Key = load_image('game_image\\loading\\Press_Key.png')
+    Title_Logo = load_image('game_image\\loading\\title_logo.png')
+
+    title_data_file = open('title_data.txt', 'r')
+    title_data = json.load(title_data_file)
+    title_data_file.close()
     pass
 
 
 def exit():
-    global BackGround,Press_Key,Title_Logo
+    global BackGround, Press_Key, Title_Logo
     del(BackGround)
     del(Press_Key)
     del(Title_Logo)
@@ -38,25 +43,18 @@ def exit():
 
 
 def handle_events():
-    events=get_events()
+    events = get_events()
     for event in events:
-        if event.type==SDL_QUIT:
+        if event.type == SDL_QUIT:
             game_framework.quit()
         else:
-            if event.type==SDL_KEYDOWN:
+            if event.type == SDL_KEYDOWN:
                 game_framework.change_state(main_state)
     pass
 
 
 def draw():
-    global count
-
-
-    title_data_file=open('title_data.txt','r')
-    title_data=json.load(title_data_file)
-    title_data_file.close()
-
-
+    global title_data
     clear_canvas()
 
     background=Image_Format.Attribute()
@@ -94,7 +92,7 @@ def draw():
     BackGround.clip_draw(background.Image_Start_X, background.Image_Start_Y,  background.Image_Width,  background.Image_Height,
                          background.Draw_Center_X, background.Draw_Center_Y, background.Draw_Width, background.Draw_Height)
 
-    if count<5:
+    if count < 5:
         Press_Key.clip_draw(press_key.Image_Start_X, press_key.Image_Start_Y,  press_key.Image_Width,  press_key.Image_Height,
                          press_key.Draw_Center_X, press_key.Draw_Center_Y, press_key.Draw_Width, press_key.Draw_Height)
 
@@ -108,11 +106,10 @@ def draw():
 
 def update():
     global count
-    count+=1
-    count%=10
+    count += 1
+    count %= 10
     enter()
     draw()
-    delay(0.1)
     pass
 
 

@@ -10,12 +10,14 @@ import game_framework
 import Letter
 
 
-delaytime=None
+delaytime = None
 #숫자를 문자로 : str(숫자)
 #문자를 숫자로 : 자료형(문자) ex)int(s)
 
 
+
 def enter():
+
     pass
 
 name = "MainState"
@@ -34,9 +36,9 @@ def resume():
 
 
 def handle_events():
-    events=get_events()
+    events = get_events()
     for event in events:
-        if event.type==SDL_QUIT:
+        if event.type == SDL_QUIT:
             exit()
 
     pass

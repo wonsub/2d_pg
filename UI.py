@@ -1,3 +1,4 @@
+__author__ = 'wonsub'
 import game_framework
 import title_state
 import Image_Format
