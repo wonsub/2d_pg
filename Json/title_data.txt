@@ -1,0 +1,7 @@
+{
+	"BackGronud" 	: {"Image_Start_X": 0,	"Image_Start_Y"	: 0,	"Image_Width"	: 500,	"Image_Height" : 200,	"Draw_Center_X" : 700,	"Draw_Center_Y" : 350,	"Draw_Width"	: 1400,	"Draw_Height"	:700},
+	"Press_Key"	: {"Image_Start_X": 0,	"Image_Start_Y" : 0,	"Image_Width"	: 800,	"Image_Height" : 600,	"Draw_Center_X" : 700,	"Draw_Center_Y" : 200,	"Draw_Width"	: 700,	"Draw_Height"	:600},
+        "Title_Logo"    : {"Image_Start_X": 0,	"Image_Start_Y" : 0,	"Image_Width"	: 800,	"Image_Height" : 600,	"Draw_Center_X" : 900,	"Draw_Center_Y" : 500,	"Draw_Width"	: 500,	"Draw_Height"	:600}
+}
+
+

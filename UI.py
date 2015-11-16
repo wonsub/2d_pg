@@ -6,8 +6,7 @@ import json
 from pico2d import *
 
 
-
-global main,board
+global main ,board
 
 class Main_Image():
 
@@ -17,7 +16,7 @@ class Main_Image():
 
     def draw(self):
 
-        UI_data_file = open('UI_data.txt','r')
+        UI_data_file = open('Json\\UI_data.txt','r')
         UI_data = json.load(UI_data_file)
         UI_data_file.close()
 
@@ -42,7 +41,8 @@ class Board():
 
 
     def draw(self):
-        UI_data_file = open('UI_data.txt','r')
+
+        UI_data_file = open('Json\\UI_data.txt','r')
         UI_data = json.load(UI_data_file)
         UI_data_file.close()
 

@@ -1,5 +1,0 @@
-{
-	"KPU_Credit" 	: {"Image_Start_X": 0,	"Image_Start_Y"	: 0,	"Image_Width"	: 1600,	"Image_Height" : 900,	"Draw_Center_X" : 800,	"Draw_Center_Y" : 450,	"Draw_Width"	: 1600,	"Draw_Height"	:900}
-}
-
-

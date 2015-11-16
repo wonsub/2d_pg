@@ -28,7 +28,7 @@ def enter():
     Press_Key = load_image('game_image\\loading\\Press_Key.png')
     Title_Logo = load_image('game_image\\loading\\title_logo.png')
 
-    title_data_file = open('title_data.txt', 'r')
+    title_data_file = open('Json\\title_data.txt', 'r')
     title_data = json.load(title_data_file)
     title_data_file.close()
     pass
@@ -57,7 +57,7 @@ def draw():
     global title_data
     clear_canvas()
 
-    background=Image_Format.Attribute()
+    background = Image_Format.Attribute()
     background.Image_Start_X=title_data['BackGronud']['Image_Start_X']
     background.Image_Start_Y=title_data['BackGronud']['Image_Start_Y']
     background.Image_Width=title_data['BackGronud']['Image_Width']
@@ -67,7 +67,7 @@ def draw():
     background.Draw_Width=title_data['BackGronud']['Draw_Width']
     background.Draw_Height=title_data['BackGronud']['Draw_Height']
 
-    press_key=Image_Format.Attribute()
+    press_key = Image_Format.Attribute()
     press_key.Image_Start_X=title_data['Press_Key']['Image_Start_X']
     press_key.Image_Start_Y=title_data['Press_Key']['Image_Start_Y']
     press_key.Image_Width=title_data['Press_Key']['Image_Width']
@@ -77,7 +77,7 @@ def draw():
     press_key.Draw_Width=title_data['Press_Key']['Draw_Width']
     press_key.Draw_Height=title_data['Press_Key']['Draw_Height']
 
-    title_logo=Image_Format.Attribute()
+    title_logo = Image_Format.Attribute()
     title_logo.Image_Start_X=title_data['Title_Logo']['Image_Start_X']
     title_logo.Image_Start_Y=title_data['Title_Logo']['Image_Start_Y']
     title_logo.Image_Width=title_data['Title_Logo']['Image_Width']

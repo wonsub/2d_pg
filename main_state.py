@@ -20,8 +20,8 @@ global image
 
 def enter():
     global image
-    # image = UI()
-    # image = UI.Main_Image()
+    Letter.enter()
+
 
 
     pass
@@ -57,6 +57,7 @@ def draw():
     global image
     clear_canvas()
     UI.draw()
+    Letter.draw()
 
 
 
