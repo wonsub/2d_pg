@@ -1,0 +1,7 @@
+{
+	"HP" 	: {"now": 10,	"max"	: 100,	"rate"	: 0,	"mark" :"Font()"},
+	"MP" 	: {"now": 10,	"max"	: 20,	"rate"	: 0.5,	"mark" : 0},
+	"EXP" 	: {"now": 0,	"max"	: 1000,	"rate"	: 0,	"mark" : 0}
+}
+
+

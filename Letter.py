@@ -1,8 +1,10 @@
 
 from pico2d import *
 
-global maxhp,nowhp
-global test
+Guage_data_file = open('Json\\Guage_data.txt','r')
+Guage_data = json.load(Guage_data_file)
+Guage_data_file.close()
+
 
 class Font:
     font=None
@@ -22,35 +24,48 @@ class Font:
             self.font.draw(self.x, self.y, self.content, color=(255, 255, 255))
 
 
-class HP_MP():
-    now,max=None,None
-
-
+class Gauge():
+    now, max = None, None
+    mark = None
+    rate=None
 
 
 def enter():
-    global HP, MP
-    global test
+    global HP, MP, EXP
 
-    test=Font()
+    HP = Gauge()
+    MP = Gauge()
+    EXP = Gauge()
 
-    HP=MP=HP_MP()
+    HP.now = Guage_data['HP']['now']
+    HP.max = Guage_data['HP']['max']
+    HP.rate = HP.now/HP.max
+    HP.mark = Font()
 
-    HP.now=50
-    HP.max=100
+    MP.now = 10
+    MP.max = 20
+    MP.mark = Font()
+
+    EXP.now = 0
+    EXP.max = 1000
+    EXP.mark = Font()
+
+    HP.mark.x, HP.mark.y, HP.mark.content = 650, 80, "{NOW:<5}/{MAX:>5}".format(NOW=HP.now, MAX=HP.max)
+    MP.mark.x, MP.mark.y, MP.mark.content = 650, 60, "{NOW:<5}/{MAX:>5}".format(NOW=MP.now, MAX=MP.max)
+    EXP.mark.x, EXP.mark.y, EXP.mark.content = 650, 30, "{NOW:<5}/{MAX:>5}".format(NOW=EXP.now, MAX=EXP.max)
 
 
-    test.x, test.y, test.content = 625, 125, "{NOW:<10}/{MAX:>10}".format(NOW=HP.now, MAX=HP.max)
+# def update():
 
-
-def update():
-    Letter_data_file = open('Json\\Letter_data.txt','r')
-    Letter_data = json.load(Letter_data_file)
-    Letter_data_file.close()
+    # Letter_data_file = open('Json\\Letter_data.txt','r')
+    # Letter_data = json.load(Letter_data_file)
+    # Letter_data_file.close()
 
 
 
 def draw():
-    global test
 
-    test.draw()
+    HP.mark.draw()
+    MP.mark.draw()
+    EXP.mark.draw()
+

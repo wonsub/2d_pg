@@ -1,8 +1,8 @@
 {
 	"Main_Image" 	: {"Image_Start_X": 0,	"Image_Start_Y"	: 0,	"Image_Width"	: 601,	"Image_Height" : 621,	
-				"Draw_Center_X" : 400,	"Draw_Center_Y" : 100,	"Draw_Width"	: 80,	"Draw_Height"	:80},
-	"Board" 	: {"Image_Start_X": 0,	"Image_Start_Y"	: 0,	"Image_Width"	: 100,	"Image_Height" : 100,	
-				"Draw_Center_X" :700,	"Draw_Center_Y" : 100,	"Draw_Width"	: 500,	"Draw_Height"	:200}
+				"Draw_Center_X" : 450,	"Draw_Center_Y" : 50,	"Draw_Width"	: 80,	"Draw_Height"	:80},
+	"Board" 	: {"Image_Start_X": 0,	"Image_Start_Y"	: 0,	"Image_Width"	: 100,	"Image_Height" : 100,
+				"Draw_Center_X" :700,	"Draw_Center_Y" : 50,	"Draw_Width"	: 400,	"Draw_Height"	:100}
 
 }
 

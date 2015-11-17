@@ -2,11 +2,16 @@ __author__ = 'wonsub'
 import game_framework
 import Image_Format
 import json
+import Letter
 
 from pico2d import *
 
+UI_data_file = open('Json\\UI_data.txt','r')
+UI_data = json.load(UI_data_file)
+UI_data_file.close()
 
-global main ,board
+
+global main ,board,Mark_guage
 
 class Main_Image():
 
@@ -16,9 +21,9 @@ class Main_Image():
 
     def draw(self):
 
-        UI_data_file = open('Json\\UI_data.txt','r')
-        UI_data = json.load(UI_data_file)
-        UI_data_file.close()
+        # UI_data_file = open('Json\\UI_data.txt','r')
+        # UI_data = json.load(UI_data_file)
+        # UI_data_file.close()
 
         main_image = Image_Format.Attribute()
         main_image.Image_Start_X = UI_data['Main_Image']['Image_Start_X']
@@ -38,13 +43,11 @@ class Board():
     def __init__(self):
         self.image = load_image('game_image\\UI\\Board.png')
 
-
-
     def draw(self):
 
-        UI_data_file = open('Json\\UI_data.txt','r')
-        UI_data = json.load(UI_data_file)
-        UI_data_file.close()
+        # UI_data_file = open('Json\\UI_data.txt','r')
+        # UI_data = json.load(UI_data_file)
+        # UI_data_file.close()
 
         board = Image_Format.Attribute()
         board.Image_Start_X = UI_data['Board']['Image_Start_X']
@@ -60,14 +63,27 @@ class Board():
             board.Image_Start_X, board.Image_Start_Y,  board.Image_Width, board.Image_Height,
             board.Draw_Center_X, board.Draw_Center_Y, board.Draw_Width, board.Draw_Height)
 
+class Mark_Gauage():
+    def __init__(self):
+        self.hp_bar = load_image('game_image\\UI\\HP_Bar.png')
+        self.mp_bar = load_image('game_image\\UI\\MP_Bar.png')
+        self.exp_bar = load_image('game_image\\UI\\EXP_Bar.png')
+
+    def draw(self):
+         self.hp_bar.clip_draw_to_origin(0,0,100,100,500,60)
+
+
 
 def draw():
-    global main, board
+    global main, board,Mark_gauage
     main = Main_Image()
     board = Board()
+    Mark_gauage=Mark_Gauage()
+
 
 
     board.draw()
     main.draw()
+    Mark_gauage.draw()
 
 
