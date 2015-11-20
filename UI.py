@@ -11,7 +11,16 @@ UI_data = json.load(UI_data_file)
 UI_data_file.close()
 
 
-global main ,board,Mark_guage
+Guage_data_file = open('Json\\Guage_data.txt','r')
+Guage_data = json.load(Guage_data_file)
+Guage_data_file.close()
+
+global HP, MP, EXP
+
+HP, MP, EXP = Letter.Gauge(), Letter.Gauge(), Letter.Gauge()
+
+
+
 
 class Main_Image():
 
@@ -64,13 +73,19 @@ class Board():
             board.Draw_Center_X, board.Draw_Center_Y, board.Draw_Width, board.Draw_Height)
 
 class Mark_Gauage():
+    global HP
+
     def __init__(self):
         self.hp_bar = load_image('game_image\\UI\\HP_Bar.png')
         self.mp_bar = load_image('game_image\\UI\\MP_Bar.png')
         self.exp_bar = load_image('game_image\\UI\\EXP_Bar.png')
 
+
     def draw(self):
-         self.hp_bar.clip_draw_to_origin(0,0,100,100,500,60)
+
+         self.hp_bar.clip_draw_to_origin(0,0,100,100,500,70,400*Guage_data["HP"]["now"]/Guage_data["HP"]['max'],20)
+         self.mp_bar.clip_draw_to_origin(0,0,100,100,500,50,400,20)
+         self.exp_bar.clip_draw_to_origin(0,0,100,100,500,20,400,20)
 
 
 

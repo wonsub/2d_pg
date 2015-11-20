@@ -38,7 +38,7 @@ def update():
 def draw():
     global  image
 
-    start_data_file=open('Json\\start_data.txt','r')
+    start_data_file=open('Json\\start_data.txt','r' )
     start_data=json.load(start_data_file)
     start_data_file.close()
 

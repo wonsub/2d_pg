@@ -50,6 +50,7 @@ def handle_events():
     pass
 
 def update():
+    Letter.update()
     pass
 
 
@@ -58,6 +59,7 @@ def draw():
     clear_canvas()
     UI.draw()
     Letter.draw()
+
 
 
 

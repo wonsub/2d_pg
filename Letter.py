@@ -1,10 +1,11 @@
 
 from pico2d import *
 
-Guage_data_file = open('Json\\Guage_data.txt','r')
-Guage_data = json.load(Guage_data_file)
-Guage_data_file.close()
+# Guage_data_file = open('Json\\Guage_data.txt','r')
+# Guage_data = json.load(Guage_data_file)
+# Guage_data_file.close()
 
+global HP, MP, EXP
 
 class Font:
     font=None
@@ -27,7 +28,7 @@ class Font:
 class Gauge():
     now, max = None, None
     mark = None
-    rate=None
+    rate= None
 
 
 def enter():
@@ -39,7 +40,6 @@ def enter():
 
     HP.now = Guage_data['HP']['now']
     HP.max = Guage_data['HP']['max']
-    HP.rate = HP.now/HP.max
     HP.mark = Font()
 
     MP.now = 10
@@ -55,13 +55,10 @@ def enter():
     EXP.mark.x, EXP.mark.y, EXP.mark.content = 650, 30, "{NOW:<5}/{MAX:>5}".format(NOW=EXP.now, MAX=EXP.max)
 
 
-# def update():
-
-    # Letter_data_file = open('Json\\Letter_data.txt','r')
-    # Letter_data = json.load(Letter_data_file)
-    # Letter_data_file.close()
-
-
+def update():
+    global HP,MP,EXP
+    HP.now += 1
+    print("+1")
 
 def draw():
 
