@@ -3,7 +3,7 @@ from pico2d import *
 import game_framework
 
 
-from boy import FreeHero as Hero # import Boy class from boy.py
+from hero import FreeHero as Hero # import Boy class from boy.py
 from background import FixedBackground as Background
 
 
@@ -19,9 +19,9 @@ def create_world():
     hero = Hero()
     background = Background()
 
-    bgm = load_music('bgm.mp3')
-    bgm.set_volume(64)
-    bgm.repeat_play()
+    # bgm = load_music('bgm.mp3')
+    # bgm.set_volume(64)
+    # bgm.repeat_play()
 
     background.set_center_object(hero)
     hero.set_background(background)
