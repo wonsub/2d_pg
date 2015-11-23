@@ -1,35 +1,49 @@
+import random
+
 from pico2d import *
-class Road:
-    image=None
+
+
+class FixedBackground:
+
     def __init__(self):
-        self.x,self.y=None,None
-        if Road.image==None:
-            self.image=load_image('game_image\\background\\road.png')
+        self.image = load_image('BackGround.png')
+        # self.image = load_image('grass.png')
+        self.speed = 0
+        self.canvas_width = get_canvas_width()
+        self.canvas_height = get_canvas_height()
+
+        self.w = self.image.w
+        self.h = self.image.h
+
+    def set_center_object(self, boy):
+        self.center_object = boy
+        # fill here
+        pass
+
 
     def draw(self):
-        self.image.clip_draw(0,0,2400,150,self.x,self.y,2400,150)
+        self.image.clip_draw_to_origin(
+            self.window_left, self.window_bottom,
+            self.canvas_width, self.canvas_height,
+            0, 0
+        )
+        # fill here
+        pass
 
 
-class Forest:
-    image=None
-    def __init__(self):
-        self.x,self.y=None,None
-        if Road.image==None:
-            self.image=load_image('game_image\\background\\forest.png')
+    def update(self, frame_time):
+        self.window_left = clamp(0,
+                                 int(self.center_object.x) - self.canvas_width//2,
+                                 self.w- self.canvas_width)
+        self.window_bottom= clamp(0,
+                                  int(self.center_object.y) - self.canvas_height//2,
+                                  self.h -self.canvas_height)
+        # fill here
+        pass
 
-    def draw(self):
-        self.image.clip_draw(0,0,600,300,self.x,self.y,800,600)
 
-class Castle:
-    image=None
-    def __init__(self):
-        self.x,self.y=None,None
-        self.frame=0
-        self.state=0
-        self.dir=1
-        if Road.image==None:
-            self.image=load_image('game_image\\background\\castle.png')
+    def handle_event(self, event):
+        pass
 
-    def draw(self):
-        self.image.clip_draw(self.frame*400,self.dir*400,400,400,self.x,self.y,400,400)
+
 
