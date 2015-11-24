@@ -19,9 +19,9 @@ def create_world():
     hero = Hero()
     background = Background()
 
-    # bgm = load_music('bgm.mp3')
-    # bgm.set_volume(64)
-    # bgm.repeat_play()
+    bgm = load_music('bgm.ogg')
+    bgm.set_volume(32)
+    bgm.repeat_play()
 
     background.set_center_object(hero)
     hero.set_background(background)
