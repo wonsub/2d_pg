@@ -20,7 +20,7 @@ def create_world():
     background = Background()
 
     bgm = load_music('bgm.ogg')
-    bgm.set_volume(32)
+    bgm.set_volume(1)
     bgm.repeat_play()
 
     background.set_center_object(hero)
@@ -57,6 +57,7 @@ def resume():
 
 
 def handle_events(frame_time):
+
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -64,9 +65,15 @@ def handle_events(frame_time):
         else:
             if (event.type, event.key) == (SDL_KEYDOWN, SDLK_ESCAPE):
                 game_framework.quit()
+            elif (event.type,event.key) ==(SDL_KEYDOWN, SDLK_q):
+                bgm.set_volume(0)
+            elif (event.type,event.key) ==(SDL_KEYDOWN, SDLK_w):
+                bgm.set_volume(1)
+
             else:
                 hero.handle_event(event)
                 background.handle_event(event)
+
 
 
 

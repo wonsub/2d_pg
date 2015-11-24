@@ -22,7 +22,8 @@ class FreeHero:
 
     LEFT_STAND, RIGHT_STAND, LEFT_WALK, RIGHT_WALK,\
     LEFT_RUN, RIGHT_RUN, LEFT_THRUST, RIGHT_THRUST,\
-    LEFT_UPPER_SLASH, RIGHT_UPPER_SLASH, LEFT_GUARD, RIGHT_GUARD = 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+    LEFT_UPPER_SLASH, RIGHT_UPPER_SLASH, LEFT_GUARD, RIGHT_GUARD, LEFT_DASH_SLASH, RIGHT_DASH_SLASH = \
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
 
 
 
@@ -52,6 +53,7 @@ class FreeHero:
             FreeHero.thrust_image = load_image('saber\\thrust\\thrust_sprite.png')
             FreeHero.upper_slash_image = load_image('saber\\upper_slash\\upper_slash_sprite.png')
             FreeHero.guard_image = load_image('saber\\guard\\guard_sprite.png')
+            FreeHero.dash_slash_image = load_image('saber\\dash_slash\\dash_slash_sprite.png')
 
             FreeHero.face = load_image('saber_face.png')
             FreeHero.bar_board = load_image('Board.png')
@@ -68,18 +70,25 @@ class FreeHero:
         self.mp_now+=0.005
         self.hp_now=min(self.hp_now,self.hp_max)
         self.mp_now=min(self.mp_now,self.mp_max)
+        # if self.guard:
+        #     self.xdir=0
+        #     self.ydir=0
+
         if self.xdir == -1:
             self.state = self.LEFT_WALK
             if self.run == 1:
                 self.state = self.LEFT_RUN
                 if self.attack == 1:
                     self.state = self.LEFT_THRUST
+
             if self.skill == 2:
                 self.state = self.LEFT_UPPER_SLASH
 
-            elif self.skill == 3:
-                self.state == self.LEFT_GUARD
+            elif self.skill == 4:
+                self.state = self.LEFT_DASH_SLASH
 
+            elif self.skill == 3 :
+                self.state = self.LEFT_GUARD
 
         elif self.xdir == 1:
             self.state = self.RIGHT_WALK
@@ -89,8 +98,15 @@ class FreeHero:
                     self.state = self.RIGHT_THRUST
             if self.skill == 2:
                 self.state = self.RIGHT_UPPER_SLASH
-            elif self.skill == 3:
-                self.state == self.RIGHT_GUARD
+
+            elif self.skill == 4:
+                self.state = self.RIGHT_DASH_SLASH
+
+            elif self.skill == 3 :
+                    self.state = self.RIGHT_GUARD
+
+
+
 
 
 
@@ -100,20 +116,23 @@ class FreeHero:
             elif self.state == self.LEFT_STAND:
                 if self.skill == 2: self.state = self.LEFT_UPPER_SLASH
                 elif self.skill == 3: self.state = self.LEFT_GUARD
+                elif self.skill == 4: self.state = self.LEFT_DASH_SLASH
 
             elif self.state == self.RIGHT_STAND:
                 if self.skill == 2: self.state = self.RIGHT_UPPER_SLASH
                 elif self.skill == 3: self.state = self.RIGHT_GUARD
+                elif self.skill == 4: self.state = self.RIGHT_DASH_SLASH
 
             elif self.skill == 0:
-                if self.state == self.LEFT_UPPER_SLASH:
+                if self.state in (self.LEFT_THRUST,self.LEFT_UPPER_SLASH, self.LEFT_GUARD, self.LEFT_DASH_SLASH):
                     self.state = self.LEFT_STAND
-                elif self.state == self.RIGHT_GUARD:
+                elif self.state in (self.RIGHT_THRUST, self.RIGHT_UPPER_SLASH, self.RIGHT_GUARD, self.RIGHT_DASH_SLASH):
                     self.state = self.RIGHT_STAND
 
 
 
         self.life_time += frame_time
+
         distance = FreeHero.RUN_SPEED_PPS * frame_time
         self.total_frames +=\
             FreeHero.FRAMES_PER_ACTION * FreeHero.ACTION_PER_TIME * frame_time
@@ -136,21 +155,27 @@ class FreeHero:
 
             # 해제
             if self.frame == 6:
-
                 self.attack = 0
                 self.run = 0
-                self.skill=0
+                self.skill = 0
 
         elif self.state in (self.LEFT_GUARD, self.RIGHT_GUARD):
             self.frame = 0
             self.run = 0
 
+        elif self.state in (self.LEFT_DASH_SLASH, self.RIGHT_DASH_SLASH):
+            self.frame = int(self.total_frames) % 5
+            self.x += (self.xdir *distance)*2
+            if self.frame == 4:
+                self.attack = 0
+                self.run = 0
+                self.skill = 0
 
-
-        self.x += (self.xdir *distance)
-        # 추가적인 이동
-        if self.run == 1:
+        if self.guard==0:
             self.x += (self.xdir *distance)
+        # 추가적인 이동
+            if self.run == 1:
+                self.x += (self.xdir *distance)
 
 
 
@@ -185,10 +210,14 @@ class FreeHero:
             self.thrust_image.clip_draw(self.frame * 550, self.state % 2 * 430, 550, 430, sx, sy, 215, 275)
 
         elif self.state in (self.LEFT_UPPER_SLASH, self.RIGHT_UPPER_SLASH):
+
             self.upper_slash_image.clip_draw(self.frame * 550, self.state % 2 * 430, 550, 430, sx, sy, 215, 275)
 
         elif self.state in (self.LEFT_GUARD, self.RIGHT_GUARD):
             self.guard_image.clip_draw(self.frame * 550, self.state % 2 * 430, 550, 430, sx, sy, 215, 275)
+
+        elif self.state in (self.LEFT_DASH_SLASH, self.RIGHT_DASH_SLASH):
+            self.dash_slash_image.clip_draw(self.frame * 550, self.state % 2 * 430, 550, 430, sx, sy, 215, 275)
 
 
         self.bar_board.clip_draw_to_origin(0, 0, 100, 100, 280, 0, 240, 100)
@@ -216,19 +245,33 @@ class FreeHero:
             elif event.key == SDLK_RIGHT: self.xdir += 1
             elif event.key == SDLK_UP: self.ydir += 1
             elif event.key == SDLK_DOWN: self.ydir -= 1
+
             elif event.key == SDLK_v: self.run = 1
-            elif event.key == SDLK_x:
+            elif event.key == SDLK_x  and self.attack==0:
+
                 self.attack = 1
                 # 일단 임시로 변경
                 self.total_frames = 0
-            elif event.key == SDLK_s:
-                self.skill = 2
-                self.total_frames = 0
-            elif event.key == SDLK_d:
-                self.skill = 3
-                self.guard = 1
-                self.hit = 0
-                self.total_frames = 0
+            elif self.skill==0:
+                if event.key == SDLK_s:
+                    if self.mp_now > 5:
+                        self.skill = 2
+                        self.total_frames = 0
+                        self.mp_now -= 5
+                elif event.key == SDLK_d:
+                    if self.mp_now > 3:
+                        self.skill = 3
+                        self.guard = 1
+                        self.hit = 0
+                        self.total_frames = 0
+                        self.mp_now -= 3
+
+
+                elif event.key == SDLK_f:
+                 if self.mp_now>5:
+                     self.skill = 4
+                     self.total_frames = 0
+                     self.mp_now -= 5
 
 
         if event.type == SDL_KEYUP:
@@ -237,10 +280,11 @@ class FreeHero:
             elif event.key == SDLK_UP: self.ydir -= 1
             elif event.key == SDLK_DOWN: self.ydir += 1
             elif event.key == SDLK_v: self.run = 0
-            elif event.key == SDLK_x: self.attack = 0
-            elif event.key == SDLK_s: self.skill = 0
+            # elif event.key == SDLK_x: self.attack = 0
+            # elif event.key == SDLK_s: self.skill = 0
             elif event.key == SDLK_d:
                 self.skill = 0
                 self.guard = 0
+            # elif event.key == SDLK_f: self.skill = 0
 
 
