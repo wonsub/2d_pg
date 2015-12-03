@@ -1,12 +1,19 @@
-import cProfile
+# fill here
+
+import platform
+import os
+
+if platform.architecture()[0] == '32bit':
+    os.environ["PYSDL2_DLL_PATH"] = "./SDL2/x86"
+else:
+    os.environ["PYSDL2_DLL_PATH"] = "./SDL2/x64"
+
 
 import game_framework
 
 import scroll_state as main_state
-#import tile_state as main_state
 
 
 
 game_framework.run(main_state)
-#cProfile.run('game_framework.run(collision)', None, True)
 

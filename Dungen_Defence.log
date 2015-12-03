@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "mygame.py", line 18, in <module>
+  File "C:\temp\combine\re\game_framework.py", line 88, in run
+    start_state.enter()
+  File "C:\temp\combine\re\scroll_state.py", line 44, in enter
+    create_world()
+  File "C:\temp\combine\re\scroll_state.py", line 19, in create_world
+    hero = Hero()
+  File "C:\temp\combine\re\hero.py", line 50, in __init__
+    FreeHero.walk_image = load_image('saber\\walk\\walk_sprite.png')
+  File "C:\Python34\lib\site-packages\pico2d.py", line 268, in load_image
+    raise IOError
+OSError

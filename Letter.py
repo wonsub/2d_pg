@@ -1,12 +1,6 @@
 
 from pico2d import *
 
-# Guage_data_file = open('Json\\Guage_data.txt','r')
-# Guage_data = json.load(Guage_data_file)
-# Guage_data_file.close()
-
-global HP, MP, EXP
-
 class Font:
     font=None
 
@@ -15,7 +9,13 @@ class Font:
         self.content = None
 
         if Font.font == None:
-            self.font = load_font("Fonts\\arial.ttf", 20)
+            self.font = load_font("ConsolaMalgun.ttf", 20)
+
+    def resize(self, size, font, font_format):
+        # self.font = load_font("ConsolaMalgun.ttf", size)
+        self.font = load_font("{size}.{font_format}".format(size, font_format))
+
+
 
     def draw(self):
 
@@ -23,46 +23,3 @@ class Font:
             self.font.draw(self.x, self.y, str(self.content), color=(255, 255, 255))
         else:
             self.font.draw(self.x, self.y, self.content, color=(255, 255, 255))
-
-
-class Gauge():
-    now, max = None, None
-    mark = None
-    rate= None
-
-
-def enter():
-    global HP, MP, EXP
-
-    HP = Gauge()
-    MP = Gauge()
-    EXP = Gauge()
-
-    HP.now = Guage_data['HP']['now']
-    HP.max = Guage_data['HP']['max']
-    HP.mark = Font()
-
-    MP.now = 10
-    MP.max = 20
-    MP.mark = Font()
-
-    EXP.now = 0
-    EXP.max = 1000
-    EXP.mark = Font()
-
-    HP.mark.x, HP.mark.y, HP.mark.content = 650, 80, "{NOW:<5}/{MAX:>5}".format(NOW=HP.now, MAX=HP.max)
-    MP.mark.x, MP.mark.y, MP.mark.content = 650, 60, "{NOW:<5}/{MAX:>5}".format(NOW=MP.now, MAX=MP.max)
-    EXP.mark.x, EXP.mark.y, EXP.mark.content = 650, 30, "{NOW:<5}/{MAX:>5}".format(NOW=EXP.now, MAX=EXP.max)
-
-
-def update():
-    global HP,MP,EXP
-    HP.now += 1
-    print("+1")
-
-def draw():
-
-    HP.mark.draw()
-    MP.mark.draw()
-    EXP.mark.draw()
-
